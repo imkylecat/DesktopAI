@@ -9,7 +9,14 @@ import SwiftUI
 import SwiftData
 
 struct APIKeysSettingsView: View {
+    @State private var apiKeyGrok: String = ""
+
     var body: some View {
-        Text("API Key Settings")
+        Form {
+            Section(header: Text("Platforms")) {
+                TextField("Groq", text: $apiKey1)
+            }
+        }
+        .padding()
     }
 }
