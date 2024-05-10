@@ -10,9 +10,11 @@ import SwiftData
 
 class BaseModel {
     var name: String
+    var provider: String
 
     init(name: String) {
         self.name = name
+        self.provider = "Groq"
     }
     func performAction() {
         
@@ -108,16 +110,20 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem {
                     Menu {
-                        ForEach(aiModels, id: \.name) { model in
-                            Button(action: {
-                                addItem()
-                            }) {
-                                Text(model.name)
-                            }
-                        }
-                    } label: {
-                        Label("Add Item", systemImage: "plus")
-                    }
+    ForEach(Dictionary(grouping: aiModels, by: \.provider).sorted(by: { $0.key < $1.key }), id: \.key) { provider, models in
+        Section(header: Text(provider)) {
+            ForEach(models, id: \.name) { model in
+                Button(action: {
+                    addItem()
+                }) {
+                    Text(model.name)
+                }
+            }
+        }
+    }
+} label: {
+    Label("Add Item", systemImage: "plus")
+}
                 }
             }
         } detail: {
