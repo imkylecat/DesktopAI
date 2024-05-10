@@ -48,16 +48,16 @@ struct ContentView: View {
     }
 
     private func fetchModels() {
-    for provider in providers {
-        provider.getModels { fetchedModels in
-            if let fetchedModels = fetchedModels {
-                DispatchQueue.main.async {
-                    self.groupedModels[provider.name] = fetchedModels
+        for provider in providers {
+            provider.getModels { fetchedModels in
+                if let fetchedModels = fetchedModels {
+                    DispatchQueue.main.async {
+                        self.groupedModels[provider.name] = fetchedModels
+                    }
                 }
             }
         }
     }
-}
 
     private func addItem() {
         withAnimation {
