@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct APIKeysSettingsView: View {
-    @State private var apiKeyGrok: String = ""
+    @AppStorage("apiKeyGrok") private var apiKeyGrok: String = ""
 
     var body: some View {
         Form {
