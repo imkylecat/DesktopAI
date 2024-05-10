@@ -8,9 +8,27 @@
 import SwiftUI
 import SwiftData
 
+class BaseModel {
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+    func performAction() {
+        
+    }
+}
+
+class ModelChatGPT3_5: BaseModel {
+    override func performAction() {
+        // Define the action to be performed by Model1
+    }
+}
+
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
+    let aiModels: [BaseModel] = [ModelChatGPT3_5(name: "ChatGPT 3.5")]
 
     var body: some View {
         NavigationSplitView {
@@ -27,7 +45,15 @@ struct ContentView: View {
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
             .toolbar {
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Menu {
+                        ForEach(aiModels, id: \.name) { model in
+                            Button(action: {
+                                self.addItem()
+                            }) {
+                                Text(model.name)
+                            }
+                        }
+                    } label: {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
