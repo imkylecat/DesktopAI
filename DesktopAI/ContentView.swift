@@ -8,23 +8,6 @@
 import SwiftUI
 import SwiftData
 
-class BaseModel {
-    var name: String
-    var provider: String
-
-    init(name: String) {
-        self.name = name
-        self.provider = "Model"
-    }
-    func performAction() {}
-}
-
-class GroqModel: BaseModel {
-    override func performAction() {
-    
-    }
-}
-
 struct APIResponse: Decodable {
     let object: String
     let data: [AIModel]
@@ -38,7 +21,7 @@ struct AIModel: Decodable {
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-    @State private var aiModels: [BaseModel] = []
+    @State private var aiModels: [BaseProvider] = []
     @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
 
     var body: some View {
@@ -116,7 +99,7 @@ struct ContentView: View {
             let decoder = JSONDecoder()
             let decodedResponse = try decoder.decode(APIResponse.self, from: data)
             DispatchQueue.main.async {
-                self.aiModels = decodedResponse.data.map { BaseModel(name: $0.id) }
+                self.aiModels = decodedResponse.data.map { BaseProvider(name: $0.id, provider: "Groq") }
             }
         } catch {
             print("Failed to decode JSON: \(error)")
