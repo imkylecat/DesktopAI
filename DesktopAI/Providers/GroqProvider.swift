@@ -41,10 +41,6 @@ class GroqProvider: BaseProvider {
                 completion(nil)
                 return
             }
-
-            if let jsonString = String(data: data, encoding: .utf8) {
-        print(jsonString)
-    }
             
             do {
                 let apiResponse = try JSONDecoder().decode(APIResponse.self, from: data)
