@@ -49,12 +49,23 @@ struct ChatBubble: Shape {
     }
 }
 
+struct APIResponse: Decodable {
+    let object: String
+    let data: [AIModel]
+}
+
+struct AIModel: Decodable {
+    let id: String
+    let active: Bool
+}
+
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-    let aiModels: [BaseModel] = [ModelChatGPT3_5(name: "ChatGPT 3.5")]
+    @State private var aiModels: [BaseModel] = []
     @State private var inputText: String = ""
     @State private var isFromCurrentUser: Bool = false
+    @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
 
     var body: some View {
         NavigationSplitView {
@@ -112,7 +123,47 @@ struct ContentView: View {
         } detail: {
             Text("Select an item")
         }
+        .onAppear(perform: fetchAIModels)
     }
+
+    private func fetchAIModels() {
+    guard let url = URL(string: "https://api.groq.com/openai/v1/models") else {
+        print("Invalid URL")
+        return
+    }
+
+    var request = URLRequest(url: url)
+    request.setValue("Bearer \(apiKeyGrok)", forHTTPHeaderField: "Authorization")
+
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        if let error = error {
+            print("Error occurred: \(error)")
+            return
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            print("Server error: \(response)")
+            return
+        }
+
+        guard let data = data else {
+            print("No data received from server")
+            return
+        }
+
+        do {
+            let decoder = JSONDecoder()
+            let decodedResponse = try decoder.decode(APIResponse.self, from: data)
+            DispatchQueue.main.async {
+                self.aiModels = decodedResponse.data.map { BaseModel(name: $0.id) }
+            }
+        } catch {
+            print("Failed to decode JSON: \(error)")
+        }
+    }
+    task.resume()
+}
 
     private func addItem() {
         withAnimation {
