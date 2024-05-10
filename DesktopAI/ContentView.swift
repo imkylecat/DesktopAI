@@ -29,13 +29,19 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     let aiModels: [BaseModel] = [ModelChatGPT3_5(name: "ChatGPT 3.5")]
+    @State private var inputText: String = ""
 
     var body: some View {
         NavigationSplitView {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        VStack {
+                            Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                            Spacer()
+                            TextField("Enter your message here", text: $inputText)
+                                .padding()
+                        }
                     } label: {
                         Text("Item")
                     }
