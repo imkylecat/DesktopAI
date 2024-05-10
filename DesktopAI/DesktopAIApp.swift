@@ -27,6 +27,9 @@ struct DesktopAIApp: App {
         WindowGroup {
             ContentView()
         }
+        Settings {
+            SettingsView()
+        }
         .modelContainer(sharedModelContainer)
     }
 }
