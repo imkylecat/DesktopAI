@@ -14,7 +14,7 @@ struct APIKeysSettingsView: View {
     var body: some View {
         Form {
             Section(header: Text("Platforms")) {
-                TextField("Groq", text: $apiKey1)
+                TextField("Groq", text: $apiKeyGrok)
             }
         }
         .padding()
