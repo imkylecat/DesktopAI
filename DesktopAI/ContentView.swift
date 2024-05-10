@@ -8,104 +8,55 @@
 import SwiftUI
 import SwiftData
 
-struct APIResponse: Decodable {
-    let object: String
-    let data: [AIModel]
-}
-
-struct AIModel: Decodable {
-    let id: String
-    let active: Bool
-}
-
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-    @State private var aiModels: [BaseProvider] = []
     @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
+    @State private var groupedModels: [String: [AIModel]] = [:]
+    private let providers: [BaseProvider] = [GroqProvider()]
 
     var body: some View {
         NavigationSplitView {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                    } label: {
-                        Text("Item")
-                    }
-                    .contextMenu {
-                        Button(action: {
-                            
-                        }) {
-                            Text("Delete")
-                            Image(systemName: "trash")
-                        }
-                    }
-                }
-                .onDelete(perform: deleteItems)
             }
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
             .toolbar {
                 ToolbarItem {
                     Menu {
-    ForEach(Dictionary(grouping: aiModels, by: \.provider).sorted(by: { $0.key < $1.key }), id: \.key) { provider, models in
-        Section(header: Text(provider)) {
-            ForEach(models, id: \.name) { model in
-                Button(action: {
-                    addItem()
-                }) {
-                    Text(model.name)
-                }
-            }
-        }
-    }
-} label: {
-    Label("Add Item", systemImage: "plus")
-}
+                        ForEach(groupedModels.sorted(by: { $0.key < $1.key }), id: \.key) { provider, models in
+                            Section(header: Text(provider)) {
+                                ForEach(models, id: \.id) { model in
+                                    Button(action: {
+                                        addItem()
+                                    }) {
+                                        Text(model.id)
+                                    }
+                                }
+                            }
+                        }
+                    } label: {
+                        Label("Add Item", systemImage: "plus")
+                    }
                 }
             }
         } detail: {
             Text("Select an item")
         }
-        .onAppear(perform: fetchAIModels)
+        .onAppear {
+            fetchModels()
+        }
     }
 
-    private func fetchAIModels() {
-    guard let url = URL(string: "https://api.groq.com/openai/v1/models") else {
-        print("Invalid URL")
-        return
-    }
-
-    var request = URLRequest(url: url)
-    request.setValue("Bearer \(apiKeyGrok)", forHTTPHeaderField: "Authorization")
-
-    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-        if let error = error {
-            print("Error occurred: \(error)")
-            return
-        }
-
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            print("Server error: \(response)")
-            return
-        }
-
-        guard let data = data else {
-            print("No data received from server")
-            return
-        }
-
-        do {
-            let decoder = JSONDecoder()
-            let decodedResponse = try decoder.decode(APIResponse.self, from: data)
-            DispatchQueue.main.async {
-                self.aiModels = decodedResponse.data.map { BaseProvider(name: $0.id, provider: "Groq") }
+    private func fetchModels() {
+    for provider in providers {
+        provider.getModels { fetchedModels in
+            if let fetchedModels = fetchedModels {
+                DispatchQueue.main.async {
+                    self.groupedModels[provider.name] = fetchedModels
+                }
             }
-        } catch {
-            print("Failed to decode JSON: \(error)")
         }
     }
-    task.resume()
 }
 
     private func addItem() {

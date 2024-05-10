@@ -9,11 +9,11 @@ import Foundation
 
 class BaseProvider {
     var name: String
-    var provider: String
 
-    init(name: String, provider: String) {
-        self.name = name
-        self.provider = provider
+    init() {
+        self.name = "Base"
     }
-    func performAction() {}
+
+    func getModels(completion: @escaping ([AIModel]?) -> Void) {
+    }
 }
