@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+import SwiftData
 
 struct GroqModel: Decodable {
     let id: String
@@ -23,8 +25,37 @@ class GroqProvider: BaseProvider {
     }
     
     override func getModels(completion: @escaping ([AIModel]?) -> Void) {
-        completion([
-            AIModel(id: "a")
-        ])
+        @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
+
+        guard let url = URL(string: "https://api.groq.com/openai/v1/models") else {
+            completion(nil)
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("Bearer " + apiKeyGrok, forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+
+            if let jsonString = String(data: data, encoding: .utf8) {
+        print(jsonString)
+    }
+            
+            do {
+                let apiResponse = try JSONDecoder().decode(APIResponse.self, from: data)
+                let aiModels = apiResponse.data.map { AIModel(id: $0.id) }
+                completion(aiModels)
+            } catch {
+                print("Failed to decode JSON: \(error)")
+                completion(nil)
+            }
+        }
+        
+        task.resume()
     }
 }
