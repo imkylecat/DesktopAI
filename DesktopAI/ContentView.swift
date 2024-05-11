@@ -47,7 +47,9 @@ struct ContentView: View {
                         ForEach(groupedModels.sorted(by: { $0.key < $1.key }), id: \.key) { provider, models in
                             Section(header: Text(provider)) {
                                 ForEach(models, id: \.id) { model in
-                                    Button(action: addItem) {
+                                    Button(action: {
+                                        addItem(model: model.id)
+                                    }) {
                                         Text(model.id)
                                     }
                                 }
@@ -96,9 +98,9 @@ struct ContentView: View {
         }
     }
 
-    private func addItem() {
+    private func addItem(model: String) {
         withAnimation {
-            let newItem = Item(timestamp: Date())
+            let newItem = Item(timestamp: Date(), model: model)
             modelContext.insert(newItem)
         }
     }
