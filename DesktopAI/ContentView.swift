@@ -11,6 +11,7 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
+    @State private var selectedItem: Item?
     @State private var groupedModels: [String: [AIModel]] = [:]
     private let providers: [BaseProvider] = [OpenAIProvider(), GroqProvider(),CloudflareAIProvider()]
 
@@ -23,9 +24,7 @@ struct ContentView: View {
         NavigationSplitView {
             List {
                 ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
+                    NavigationLink(destination: DisplayChats(selectedItem: item)) {
                         Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
                     }
                     .contextMenu {
@@ -60,7 +59,11 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            Text("Select an item")
+            if let selectedItem = selectedItem {
+                DisplayChats(selectedItem: selectedItem)
+            } else {
+                Text("Select an item")
+            }
         }
         .onAppear {
             fetchModels()
