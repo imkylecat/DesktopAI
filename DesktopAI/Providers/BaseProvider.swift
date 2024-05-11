@@ -16,4 +16,6 @@ class BaseProvider {
 
     func getModels(completion: @escaping ([AIModel]?) -> Void) {
     }
+
+    func chat(item: Item) -> Void {}
 }

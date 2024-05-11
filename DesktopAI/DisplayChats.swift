@@ -32,6 +32,9 @@ struct DisplayChats: View {
                         let newMessage = ChatMessage(content: userMessage, isFromAI: false)
                         selectedItem.chatHistory.append(newMessage)
                         userMessage = ""
+
+                        let provider = GroqProvider()
+                        provider.chat(item: selectedItem)
                     })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(5)
