@@ -118,7 +118,9 @@ class GroqProvider: BaseProvider {
             if let firstChoice = response.choices.first {
                 print(firstChoice)
                 let chatMessage = ChatMessage(content: firstChoice.message.content, isFromAI: true)
-                item.chatHistory.append(chatMessage)
+                DispatchQueue.main.async {
+                    item.chatHistory.append(chatMessage)
+                }
             }
         } catch {
             print("Failed to decode JSON: \(error)")
