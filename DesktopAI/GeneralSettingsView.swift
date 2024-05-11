@@ -9,15 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct GeneralSettingsView: View {
-    @AppStorage("isStreamEnabled") private var isStreamEnabled: Bool = false
+    @AppStorage("isModelResponseStreamingEnabled") private var isModelResponseStreamingEnabled: Bool = false
 
     var body: some View {
         Form {
-            Section(header: Text("General Settings")) {
-                Toggle(isOn: $isStreamEnabled) {
-                    Text("Streaming")
+            Section() {
+                Toggle(isOn: $isModelResponseStreamingEnabled) {
+                    Text("Response Streaming")
                 }
-                Text("Enable this to start streaming. Better known as the Typewritter effect")
+                Text("Enables real-time streaming of AI responses, known as the \"Typewriter effect\".")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
