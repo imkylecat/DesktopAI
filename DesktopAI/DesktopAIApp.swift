@@ -26,10 +26,10 @@ struct DesktopAIApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(sharedModelContainer)
         }
         Settings {
             SettingsView()
         }
-        .modelContainer(sharedModelContainer)
     }
 }
