@@ -13,7 +13,7 @@ struct APIKeysSettingsView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("Platforms")) {
+            Section(header: Text("Providers")) {
                 TextField("Groq", text: $apiKeyGrok)
             }
         }
