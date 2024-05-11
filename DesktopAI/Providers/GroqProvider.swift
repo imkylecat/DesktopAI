@@ -90,7 +90,7 @@ class GroqProvider: BaseProvider {
 
     let requestBody: [String: Any] = [
         "max_tokens": 1024,
-        "messages": item.chatHistory.map { ["role": $0.isFromAI ? "system" : "user", "content": $0.content] },
+        "messages": item.chatHistory.sorted { $0.timestamp < $1.timestamp }.map { ["role": $0.isFromAI ? "system" : "user", "content": $0.content] },
         "model": "llama3-8b-8192",
         "stop": NSNull(),
         "stream": false,
