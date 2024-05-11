@@ -14,6 +14,11 @@ struct ContentView: View {
     @State private var groupedModels: [String: [AIModel]] = [:]
     private let providers: [BaseProvider] = [OpenAIProvider(), GroqProvider(),CloudflareAIProvider()]
 
+    @AppStorage("apiKeyGrok") private var apiKeyGrok: String = ""
+    @AppStorage("apiKeyOpenAI") var apiKeyOpenAI: String = ""
+    @AppStorage("apiKeyCloudflareAIAccountId") var apiKeyCloudflareAIAccountId: String = ""
+    @AppStorage("apiKeyCloudflareAIKey") var apiKeyCloudflareAIKey: String = ""
+
     var body: some View {
         NavigationSplitView {
             List {
@@ -58,6 +63,18 @@ struct ContentView: View {
             Text("Select an item")
         }
         .onAppear {
+            fetchModels()
+        }
+        .onChange(of: apiKeyGrok) { _, _ in
+            fetchModels()
+        }
+        .onChange(of: apiKeyOpenAI) { _, _ in
+            fetchModels()
+        }
+        .onChange(of: apiKeyCloudflareAIAccountId) { _, _ in
+            fetchModels()
+        }
+        .onChange(of: apiKeyCloudflareAIKey) { _, _ in
             fetchModels()
         }
     }
