@@ -13,13 +13,19 @@ struct DisplayChats: View {
     @State private var userMessage = ""
     
     var body: some View {
-        ScrollView {
+        ZStack {
             VStack {
-                Text("Item at \(selectedItem.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                Spacer()
-                Divider()
-                TextField("Enter Message", text: $userMessage)
-                    .padding([.trailing, .leading], 10)
+                ScrollView {
+                    VStack {
+                        Spacer()
+                    }
+                }
+                HStack {
+                    TextField("Enter Message", text: $userMessage)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(5)
+                }
+                .background(Color.gray.opacity(0.1))
             }
         }
     }
