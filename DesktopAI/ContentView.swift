@@ -23,7 +23,7 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             List {
-                ForEach(items) { item in
+                ForEach(items.sorted(by: { $1.timestamp < $0.timestamp })) { item in
                     NavigationLink(destination: DisplayChats(selectedItem: item)) {
                         Text(item.model)
                     }
