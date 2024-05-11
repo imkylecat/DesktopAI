@@ -72,61 +72,58 @@ class GroqProvider: BaseProvider {
         task.resume()
     }
 
-    override func chat(item: Item) -> Void {
-    @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
+    override func sendChat(item: Item) -> Void {
+        @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
 
-    guard !apiKeyGrok.isEmpty else {
-        return
-    }
-
-    guard let url = URL(string: "https://api.groq.com/openai/v1/chat/completions") else {
-        return
-    }
-
-    var request = URLRequest(url: url)
-    request.httpMethod = "POST"
-    request.addValue("Bearer " + apiKeyGrok, forHTTPHeaderField: "Authorization")
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-    let requestBody: [String: Any] = [
-        "max_tokens": 1024,
-        "messages": item.chatHistory.sorted { $0.timestamp < $1.timestamp }.map { ["role": $0.isFromAI ? "system" : "user", "content": $0.content] },
-        "model": item.model,
-        "stop": NSNull(),
-        "stream": false,
-        "temperature": 1,
-        "top_p": 1
-    ]
-
-    do {
-        let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
-        request.httpBody = jsonData
-    } catch {
-        print("Failed to encode JSON: \(error)")
-        return
-    }
-
-    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-        guard let data = data else {
+        guard !apiKeyGrok.isEmpty else {
             return
         }
 
-        do {
-            let decoder = JSONDecoder()
-            let response = try decoder.decode(Response.self, from: data)
-            
-            if let firstChoice = response.choices.first {
-                print(firstChoice)
-                let chatMessage = ChatMessage(content: firstChoice.message.content, isFromAI: true)
-                DispatchQueue.main.async {
-                    item.chatHistory.append(chatMessage)
-                }
-            }
-        } catch {
-            print("Failed to decode JSON: \(error)")
+        guard let url = URL(string: "https://api.groq.com/openai/v1/chat/completions") else {
+            return
         }
-    }
 
-    task.resume()
-}
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("Bearer " + apiKeyGrok, forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let requestBody: [String: Any] = [
+            "max_tokens": 1024,
+            "messages": item.chatHistory.sorted { $0.timestamp < $1.timestamp }.map { ["role": $0.isFromAI ? "system" : "user", "content": $0.content] },
+            "model": item.model,
+            "stop": NSNull(),
+            "stream": false,
+            "temperature": 1,
+            "top_p": 1
+        ]
+
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+            request.httpBody = jsonData
+        } catch {
+            print("Failed to encode JSON: \(error)")
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(Response.self, from: data)
+                
+                if let firstChoice = response.choices.first {
+                    print(firstChoice)
+                    self.handleResponseMessage(item: item, content: firstChoice.message.content)
+                }
+            } catch {
+                print("Failed to decode JSON: \(error)")
+            }
+        }
+
+        task.resume()
+    }
 }

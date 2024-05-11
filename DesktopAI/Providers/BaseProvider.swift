@@ -17,5 +17,12 @@ class BaseProvider {
     func getModels(completion: @escaping ([AIModel]?) -> Void) {
     }
 
-    func chat(item: Item) -> Void {}
+    func sendChat(item: Item) -> Void {}
+    
+    func handleResponseMessage(item: Item, content: String) -> Void {
+        DispatchQueue.main.async {
+            let chatMessage = ChatMessage(content: content, isFromAI: true)
+            item.chatHistory.append(chatMessage)
+        }
+    }
 }

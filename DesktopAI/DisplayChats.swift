@@ -39,7 +39,7 @@ struct DisplayChats: View {
                         userMessage = ""
 
                         let provider = GroqProvider()
-                        provider.chat(item: selectedItem)
+                        provider.sendChat(item: selectedItem)
                     })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(5)
