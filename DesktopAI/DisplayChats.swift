@@ -17,13 +17,13 @@ struct DisplayChats: View {
         ZStack {
             VStack {
                 ScrollView {
-                    ForEach(selectedItem.chatHistory, id: \.content) { message in
+                    ForEach(selectedItem.chatHistory.sorted(by: { $0.timestamp < $1.timestamp }), id: \.content) { message in
                         Text(message.content)
                             .padding(10)
-                            .background(message.isFromAI ? Color.gray : Color.blue)
+                            .background(message.isFromAI ? Color.blue : Color.gray)
                             .foregroundColor(.white)
                             .cornerRadius(10)
-                            .frame(maxWidth: .infinity, alignment: message.isFromAI ? .trailing : .leading)
+                            .frame(maxWidth: .infinity, alignment: message.isFromAI ? .leading : .trailing)
                             .padding(.bottom, 5)
                     }
                 }

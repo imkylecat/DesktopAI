@@ -10,6 +10,7 @@ import SwiftData
 
 @Model
 final class ChatMessage {
+    var timestamp: Date
     var content: String
     var isFromAI: Bool
     var item: Item?
@@ -17,5 +18,6 @@ final class ChatMessage {
     init(content: String, isFromAI: Bool) {
         self.content = content
         self.isFromAI = isFromAI
+        self.timestamp = Date()
     }
 }
