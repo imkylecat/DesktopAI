@@ -11,6 +11,8 @@ import SwiftData
 @Model
 final class Item {
     var timestamp: Date
+    @Relationship(deleteRule: .cascade, inverse: \ChatMessage.item)
+    var chatHistory = [ChatMessage]()
     
     init(timestamp: Date) {
         self.timestamp = timestamp
