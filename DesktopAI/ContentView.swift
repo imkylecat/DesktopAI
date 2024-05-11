@@ -11,13 +11,20 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-    @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
     @State private var groupedModels: [String: [AIModel]] = [:]
     private let providers: [BaseProvider] = [GroqProvider()]
 
     var body: some View {
         NavigationSplitView {
             List {
+                ForEach(items) { item in
+                    NavigationLink {
+                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                    } label: {
+                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                    }
+                }
+                .onDelete(perform: deleteItems)
             }
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
             .toolbar {
@@ -26,9 +33,7 @@ struct ContentView: View {
                         ForEach(groupedModels.sorted(by: { $0.key < $1.key }), id: \.key) { provider, models in
                             Section(header: Text(provider)) {
                                 ForEach(models, id: \.id) { model in
-                                    Button(action: {
-                                        addItem()
-                                    }) {
+                                    Button(action: addItem) {
                                         Text(model.id)
                                     }
                                 }
