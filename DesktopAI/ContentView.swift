@@ -80,6 +80,8 @@ struct ContentView: View {
     }
 
     private func fetchModels() {
+        self.groupedModels = [:]
+        
         for provider in providers {
             provider.getModels { fetchedModels in
                 if let fetchedModels = fetchedModels {
