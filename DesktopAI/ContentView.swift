@@ -108,6 +108,7 @@ struct ContentView: View {
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
+                items[index].chatHistory = []
                 modelContext.delete(items[index])
             }
         }
