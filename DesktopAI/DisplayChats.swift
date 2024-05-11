@@ -27,6 +27,7 @@ struct DisplayChats: View {
                             .padding(.bottom, 5)
                     }
                 }
+                .padding()
                 HStack {
                     TextField("Enter Message", text: $userMessage, onCommit: {
                         guard userMessage.count > 1 else {
