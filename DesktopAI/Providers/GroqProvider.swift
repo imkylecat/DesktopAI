@@ -13,7 +13,7 @@ struct GroqModel: Decodable {
     let id: String
 }
 
-struct APIResponse: Decodable {
+struct GroqAPIResponse: Decodable {
     let object: String
     let data: [GroqModel]
 }
@@ -47,7 +47,7 @@ class GroqProvider: BaseProvider {
             }
             
             do {
-                let apiResponse = try JSONDecoder().decode(APIResponse.self, from: data)
+                let apiResponse = try JSONDecoder().decode(GroqAPIResponse.self, from: data)
                 let aiModels = apiResponse.data.map { AIModel(id: $0.id) }
                 completion(aiModels)
             } catch {
