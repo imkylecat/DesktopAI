@@ -28,7 +28,11 @@ struct DisplayChats: View {
                     }
                 }
                 HStack {
-                    TextField("Enter Message", text: $userMessage)
+                    TextField("Enter Message", text: $userMessage, onCommit: {
+                        let newMessage = ChatMessage(content: userMessage, isFromAI: false)
+                        selectedItem.chatHistory.append(newMessage)
+                        userMessage = ""
+                    })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(5)
                 }
