@@ -29,6 +29,10 @@ struct DisplayChats: View {
                 }
                 HStack {
                     TextField("Enter Message", text: $userMessage, onCommit: {
+                        guard userMessage.count > 1 else {
+                            return
+                        }
+
                         let newMessage = ChatMessage(content: userMessage, isFromAI: false)
                         selectedItem.chatHistory.append(newMessage)
                         userMessage = ""
