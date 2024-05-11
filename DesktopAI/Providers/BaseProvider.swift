@@ -20,7 +20,7 @@ class BaseProvider {
     
     func handleUserSentChatMessageResponse(item: Item, content: String) -> Void {
         DispatchQueue.main.async {
-            let chatMessage = ChatMessage(content: content, isFromAI: true)
+            let chatMessage = ChatMessage(content: content, isFromAI: true, item: item)
             item.chatHistory.append(chatMessage)
         }
     }

@@ -34,7 +34,7 @@ struct DisplayChats: View {
                             return
                         }
 
-                        let newMessage = ChatMessage(content: userMessage, isFromAI: false)
+                        let newMessage = ChatMessage(content: userMessage, isFromAI: false, item: selectedItem)
                         selectedItem.chatHistory.append(newMessage)
                         userMessage = ""
 

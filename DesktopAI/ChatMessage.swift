@@ -15,9 +15,10 @@ final class ChatMessage {
     var isFromAI: Bool
     var item: Item?
 
-    init(content: String, isFromAI: Bool) {
+    init(content: String, isFromAI: Bool, item: Item) {
         self.content = content
         self.isFromAI = isFromAI
+        self.item = item
         self.timestamp = Date()
     }
 }
