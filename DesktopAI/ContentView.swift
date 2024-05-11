@@ -23,6 +23,16 @@ struct ContentView: View {
                     } label: {
                         Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
                     }
+                    .contextMenu {
+                        Button(action: {
+                            withAnimation {
+                                modelContext.delete(item)
+                            }
+                        }) {
+                            Text("Delete")
+                            Image(systemName: "trash")
+                        }
+                    }
                 }
                 .onDelete(perform: deleteItems)
             }
