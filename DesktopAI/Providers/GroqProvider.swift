@@ -72,7 +72,7 @@ class GroqProvider: BaseProvider {
         task.resume()
     }
 
-    override func sendChat(item: Item) -> Void {
+    override func userSentChatMessage(item: Item) -> Void {
         @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
 
         guard !apiKeyGrok.isEmpty else {
@@ -117,7 +117,7 @@ class GroqProvider: BaseProvider {
                 
                 if let firstChoice = response.choices.first {
                     print(firstChoice)
-                    self.handleResponseMessage(item: item, content: firstChoice.message.content)
+                    self.handleUserSentChatMessageResponse(item: item, content: firstChoice.message.content)
                 }
             } catch {
                 print("Failed to decode JSON: \(error)")
