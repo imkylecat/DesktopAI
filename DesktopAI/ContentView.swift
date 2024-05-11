@@ -25,7 +25,7 @@ struct ContentView: View {
             List {
                 ForEach(items) { item in
                     NavigationLink(destination: DisplayChats(selectedItem: item)) {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        Text(item.model)
                     }
                     .contextMenu {
                         Button(action: {
