@@ -27,6 +27,10 @@ class GroqProvider: BaseProvider {
     override func getModels(completion: @escaping ([AIModel]?) -> Void) {
         @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
 
+        guard !apiKeyGrok.isEmpty else {
+            return
+        }
+
         guard let url = URL(string: "https://api.groq.com/openai/v1/models") else {
             completion(nil)
             return

@@ -26,6 +26,6 @@ struct SettingsView: View {
                 .tag(Tabs.apikeys)
         }
         .padding(20)
-        .frame(width: 375, height: 150)
+        .frame(width: 400, height: 200)
     }
 }

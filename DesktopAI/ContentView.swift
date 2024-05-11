@@ -12,7 +12,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     @State private var groupedModels: [String: [AIModel]] = [:]
-    private let providers: [BaseProvider] = [GroqProvider()]
+    private let providers: [BaseProvider] = [OpenAIProvider(), GroqProvider(),CloudflareAIProvider()]
 
     var body: some View {
         NavigationSplitView {

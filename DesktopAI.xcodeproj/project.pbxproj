@@ -12,6 +12,8 @@
 		2747DE0E2BEDC12500626C4F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2747DE0D2BEDC12500626C4F /* Item.swift */; };
 		2747DE102BEDC12600626C4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2747DE0F2BEDC12600626C4F /* Assets.xcassets */; };
 		2747DE132BEDC12600626C4F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2747DE122BEDC12600626C4F /* Preview Assets.xcassets */; };
+		274D39A22BEEF147004228FF /* OpenAIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274D39A12BEEF147004228FF /* OpenAIProvider.swift */; };
+		274D39A42BEEF4AF004228FF /* CloudflareAIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274D39A32BEEF4AF004228FF /* CloudflareAIProvider.swift */; };
 		278836962BEEE0B2003FEB01 /* GroqProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278836952BEEE0B2003FEB01 /* GroqProvider.swift */; };
 		278836982BEEE0C2003FEB01 /* BaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278836972BEEE0C2003FEB01 /* BaseProvider.swift */; };
 		2788369A2BEEE1AB003FEB01 /* AIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278836992BEEE1AB003FEB01 /* AIModel.swift */; };
@@ -28,6 +30,8 @@
 		2747DE0F2BEDC12600626C4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2747DE122BEDC12600626C4F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2747DE142BEDC12600626C4F /* DesktopAI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DesktopAI.entitlements; sourceTree = "<group>"; };
+		274D39A12BEEF147004228FF /* OpenAIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIProvider.swift; sourceTree = "<group>"; };
+		274D39A32BEEF4AF004228FF /* CloudflareAIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudflareAIProvider.swift; sourceTree = "<group>"; };
 		278836952BEEE0B2003FEB01 /* GroqProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroqProvider.swift; sourceTree = "<group>"; };
 		278836972BEEE0C2003FEB01 /* BaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProvider.swift; sourceTree = "<group>"; };
 		278836992BEEE1AB003FEB01 /* AIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModel.swift; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 			children = (
 				278836952BEEE0B2003FEB01 /* GroqProvider.swift */,
 				278836972BEEE0C2003FEB01 /* BaseProvider.swift */,
+				274D39A12BEEF147004228FF /* OpenAIProvider.swift */,
+				274D39A32BEEF4AF004228FF /* CloudflareAIProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -168,7 +174,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				274D39A22BEEF147004228FF /* OpenAIProvider.swift in Sources */,
 				2788369A2BEEE1AB003FEB01 /* AIModel.swift in Sources */,
+				274D39A42BEEF4AF004228FF /* CloudflareAIProvider.swift in Sources */,
 				278836962BEEE0B2003FEB01 /* GroqProvider.swift in Sources */,
 				2747DE0C2BEDC12500626C4F /* ContentView.swift in Sources */,
 				2CE55CF72BEEC568000A95C8 /* GeneralSettingsView.swift in Sources */,
