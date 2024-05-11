@@ -10,7 +10,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query(sort: \Item.timestamp, order: .forward, animation: .spring) private var items: [Item]
     @State private var selectedItem: Item?
     @State private var groupedModels: [String: [AIModel]] = [:]
     private let providers: [BaseProvider] = [OpenAIProvider(), GroqProvider(),CloudflareAIProvider()]
@@ -22,23 +22,18 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
-            List {
-                ForEach(items.sorted(by: { $1.timestamp < $0.timestamp })) { item in
-                    NavigationLink(destination: DisplayChats(selectedItem: item)) {
-                        Text(item.model)
-                    }
-                    .contextMenu {
-                        Button(action: {
-                            withAnimation {
-                                modelContext.delete(item)
-                            }
-                        }) {
-                            Text("Delete")
-                            Image(systemName: "trash")
+            List(items) { item in
+                NavigationLink(item.model, destination: DisplayChats(selectedItem: item))
+                .contextMenu {
+                    Button(action: {
+                        withAnimation {
+                            modelContext.delete(item)
                         }
+                    }) {
+                        Text("Delete")
+                        Image(systemName: "trash")
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
             .toolbar {

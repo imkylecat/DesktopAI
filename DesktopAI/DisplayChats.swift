@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct DisplayChats: View {
-    let selectedItem: Item
+    @State var selectedItem: Item
     @State private var userMessage = ""
     
     var body: some View {

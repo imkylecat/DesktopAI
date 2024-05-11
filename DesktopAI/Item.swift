@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 final class Item {
-    var timestamp: Date
+    @Attribute(.unique) var timestamp: Date
     var model: String
     
     @Relationship(deleteRule: .cascade) var chatHistory: [ChatMessage] = []

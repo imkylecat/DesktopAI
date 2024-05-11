@@ -13,7 +13,7 @@ final class ChatMessage {
     var timestamp: Date
     var content: String
     var isFromAI: Bool
-    var item: Item?
+    @Relationship(deleteRule: .cascade) var item: Item?
 
     init(content: String, isFromAI: Bool, item: Item) {
         self.content = content
