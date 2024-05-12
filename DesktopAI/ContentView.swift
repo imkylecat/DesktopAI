@@ -12,6 +12,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Item.timestamp, order: .forward, animation: .spring) private var items: [Item]
     @State private var selectedItem: Item?
+    @State private var selectedItemId: UUID?
     @State private var groupedModels: [String: [AIModel]] = [:]
     private let providers: [BaseProvider] = [OpenAIProvider(), GroqProvider(),CloudflareAIProvider()]
 
@@ -23,8 +24,11 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             List(items) { item in
-                NavigationLink(item.model, destination: DisplayChats(selectedItem: item))
-                .contextMenu {
+                NavigationLink(item.model, 
+    destination: DisplayChats(selectedItemId: self.$selectedItemId),
+    tag: item.id,
+    selection: self.$selectedItemId
+).contextMenu {
                     Button(action: {
                         withAnimation {
                             modelContext.delete(item)
@@ -56,11 +60,7 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            if let selectedItem = selectedItem {
-                DisplayChats(selectedItem: selectedItem)
-            } else {
-                Text("Select an item")
-            }
+            Text("Select an item")
         }
         .onAppear {
             fetchModels()

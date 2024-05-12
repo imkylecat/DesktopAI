@@ -10,14 +10,19 @@ import SwiftUI
 import SwiftData
 
 struct DisplayChats: View {
-    @State var selectedItem: Item
     @State private var userMessage = ""
+    @Binding var selectedItemId: UUID?
+    @Query private var items: [Item]
+
+    var selectedItem: Item? {
+        items.first(where: { $0.id == selectedItemId })
+    }
     
     var body: some View {
         ZStack {
             VStack {
                 ScrollView {
-                    ForEach(selectedItem.chatHistory.sorted(by: { $0.timestamp < $1.timestamp }), id: \.content) { message in
+                    ForEach(selectedItem?.chatHistory.sorted(by: { $0.timestamp < $1.timestamp }) ?? [], id: \.content) { message in
                         Text(message.content)
                             .padding(10)
                             .background(message.isFromAI ? Color(red: 0.2, green: 0.2, blue: 0.2) : Color.blue)
@@ -31,6 +36,10 @@ struct DisplayChats: View {
                 HStack {
                     TextField("Enter Message", text: $userMessage, onCommit: {
                         guard userMessage.count > 1 else {
+                            return
+                        }
+                        
+                        guard let selectedItem = selectedItem else {
                             return
                         }
 
