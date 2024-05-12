@@ -10,7 +10,7 @@ import SwiftData
 
 struct SettingsView: View {
     private enum Tabs: Hashable {
-        case general, apikeys
+        case general, apikeys, systemprompts
     }
     var body: some View {
         TabView {
@@ -24,6 +24,11 @@ struct SettingsView: View {
                     Label("API Keys", systemImage: "key")
                 }
                 .tag(Tabs.apikeys)
+            SystemPromptSettingsView()
+                .tabItem {
+                    Label("System Prompts", systemImage: "rectangle.and.pencil.and.ellipsis")
+                }
+                .tag(Tabs.systemprompts)
         }
         .padding(20)
         .frame(width: 400, height: 200)
