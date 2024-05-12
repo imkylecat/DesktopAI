@@ -31,6 +31,6 @@ struct SettingsView: View {
                 .tag(Tabs.systemprompts)
         }
         .padding(20)
-        .frame(width: 400, height: 200)
+        .frame(width: 800, height: 400)
     }
 }

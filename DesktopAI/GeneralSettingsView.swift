@@ -13,7 +13,7 @@ struct GeneralSettingsView: View {
     @AppStorage("modelSystemPrompt") private var modelSystemPrompt: String = ""
 
     var body: some View {
-        Form {
+        VStack(alignment: .leading) {
             Section() {
                 Toggle(isOn: $isModelResponseStreamingEnabled) {
                     Text("Response Streaming")
@@ -26,6 +26,7 @@ struct GeneralSettingsView: View {
                 TextField("System Prompt", text: $modelSystemPrompt)
             }
         }
+        .frame(maxHeight: .infinity, alignment: .top)
         .padding()
     }
 }
