@@ -10,7 +10,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Item.timestamp, order: .forward, animation: .spring) private var items: [Item]
+    @Query(sort: \Item.timestamp, order: .reverse, animation: .spring) private var items: [Item]
     @State private var selectedItem: Item?
     @State private var selectedItemId: UUID?
     @State private var groupedModels: [String: [AIModel]] = [:]
