@@ -74,6 +74,7 @@ class GroqProvider: BaseProvider {
 
     override func userSentChatMessage(item: Item) -> Void {
         @AppStorage("apiKeyGrok") var apiKeyGrok: String = ""
+        @AppStorage("modelSystemPrompt") var modelSystemPrompt: String = ""
 
         guard !apiKeyGrok.isEmpty else {
             return
@@ -88,9 +89,16 @@ class GroqProvider: BaseProvider {
         request.addValue("Bearer " + apiKeyGrok, forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
+        var messages = item.chatHistory.sorted { $0.timestamp < $1.timestamp }.map { ["role": $0.isFromAI ? "system" : "user", "content": $0.content] }
+        if !modelSystemPrompt.isEmpty {
+            let systemPrompt = ["role": "system", "content": modelSystemPrompt]
+            messages.insert(systemPrompt, at: 0)
+        }
+
+
         let requestBody: [String: Any] = [
             "max_tokens": 1024,
-            "messages": item.chatHistory.sorted { $0.timestamp < $1.timestamp }.map { ["role": $0.isFromAI ? "system" : "user", "content": $0.content] },
+            "messages": messages,
             "model": item.model,
             "stop": NSNull(),
             "stream": false,
