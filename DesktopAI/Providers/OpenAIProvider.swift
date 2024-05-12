@@ -48,7 +48,7 @@ class OpenAIProvider: BaseProvider {
             
             do {
                 let apiResponse = try JSONDecoder().decode(OpenAIAPIResponse.self, from: data)
-                let aiModels = apiResponse.data.map { AIModel(id: $0.id) }
+                let aiModels = apiResponse.data.map { AIModel(id: $0.id) }.filter { $0.id.hasPrefix("gpt-") }
                 completion(aiModels)
             } catch {
                 print("Failed to decode JSON: \(error)")
