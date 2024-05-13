@@ -13,8 +13,9 @@ struct SystemPromptSettingsView: View {
         HSplitView {
             VStack {
                 Text("Test")
-                    .frame(width: 200, height: 300)
-                    .border(Color.black, width: 1)
+                    .frame(maxHeight: .infinity)
+                    .frame(width: 200)
+                    .background(Color.gray.opacity(0.1))
                 HStack {
                     Button(action: {
                         print("Plus")
