@@ -10,6 +10,24 @@ import SwiftData
 
 struct SystemPromptSettingsView: View {
     var body: some View {
-        Text("Test")
+        HSplitView {
+            VStack {
+                Text("Test")
+                    .frame(width: 200, height: 300)
+                    .border(Color.black, width: 1)
+                HStack {
+                    Button(action: {
+                        print("Plus")
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                    Button(action: {
+                        print("minus")
+                    }) {
+                        Image(systemName: "minus")
+                    }
+                }
+            }
+        }
     }
 }

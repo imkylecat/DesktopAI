@@ -97,7 +97,7 @@ class GroqProvider: BaseProvider {
 
 
         let requestBody: [String: Any] = [
-            "max_tokens": 1024,
+            "max_tokens": 8192,
             "messages": messages,
             "model": item.model,
             "stop": NSNull(),
