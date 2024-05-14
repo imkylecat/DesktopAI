@@ -47,7 +47,24 @@ struct DisplayChats: View {
                         selectedItem.chatHistory.append(newMessage)
                         userMessage = ""
 
-                        let provider = GroqProvider()
+                        let provider: BaseProvider?
+                        
+                        switch selectedItem.provider {
+                        case "Groq":
+                            provider = GroqProvider()
+                        case "OpenAI":
+                            provider = OpenAIProvider()
+                        case "CloudflareAI":
+                            provider = CloudflareAIProvider()
+                            
+                        default:
+                            return
+                        }
+                        
+                        guard let provider = provider else {
+                            return
+                        }
+                        
                         provider.userSentChatMessage(item: selectedItem)
                     })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
