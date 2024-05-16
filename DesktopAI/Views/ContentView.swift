@@ -25,10 +25,10 @@ struct ContentView: View {
         NavigationSplitView {
             List(items) { item in
                 NavigationLink(item.model, 
-    destination: DisplayChats(selectedItemId: self.$selectedItemId),
-    tag: item.id,
-    selection: self.$selectedItemId
-).contextMenu {
+                               destination: DisplayChatsView(selectedItemId: self.$selectedItemId),
+                               tag: item.id,
+                               selection: self.$selectedItemId
+                ).contextMenu {
                     Button(action: {
                         withAnimation {
                             modelContext.delete(item)

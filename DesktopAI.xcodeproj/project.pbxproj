@@ -18,7 +18,7 @@
 		278836962BEEE0B2003FEB01 /* GroqProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278836952BEEE0B2003FEB01 /* GroqProvider.swift */; };
 		278836982BEEE0C2003FEB01 /* BaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278836972BEEE0C2003FEB01 /* BaseProvider.swift */; };
 		2788369A2BEEE1AB003FEB01 /* AIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278836992BEEE1AB003FEB01 /* AIModel.swift */; };
-		2CAF55412BEEEE8A00EFEB83 /* DisplayChats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF55402BEEEE8A00EFEB83 /* DisplayChats.swift */; };
+		2CAF55412BEEEE8A00EFEB83 /* DisplayChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF55402BEEEE8A00EFEB83 /* DisplayChatsView.swift */; };
 		2CE55CF52BEEC2D3000A95C8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE55CF42BEEC2D3000A95C8 /* SettingsView.swift */; };
 		2CE55CF72BEEC568000A95C8 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE55CF62BEEC568000A95C8 /* GeneralSettingsView.swift */; };
 		2CE55CF92BEEC602000A95C8 /* APIKeysSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE55CF82BEEC602000A95C8 /* APIKeysSettingsView.swift */; };
@@ -39,7 +39,7 @@
 		278836952BEEE0B2003FEB01 /* GroqProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroqProvider.swift; sourceTree = "<group>"; };
 		278836972BEEE0C2003FEB01 /* BaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProvider.swift; sourceTree = "<group>"; };
 		278836992BEEE1AB003FEB01 /* AIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModel.swift; sourceTree = "<group>"; };
-		2CAF55402BEEEE8A00EFEB83 /* DisplayChats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayChats.swift; sourceTree = "<group>"; };
+		2CAF55402BEEEE8A00EFEB83 /* DisplayChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayChatsView.swift; sourceTree = "<group>"; };
 		2CE55CF42BEEC2D3000A95C8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2CE55CF62BEEC568000A95C8 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		2CE55CF82BEEC602000A95C8 /* APIKeysSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeysSettingsView.swift; sourceTree = "<group>"; };
@@ -76,20 +76,13 @@
 		2747DE082BEDC12500626C4F /* DesktopAI */ = {
 			isa = PBXGroup;
 			children = (
+				27CC33D22BF665730084DEC6 /* Utils */,
+				27CC33D12BF664D40084DEC6 /* Views */,
 				278836942BEEE09F003FEB01 /* Providers */,
 				2747DE092BEDC12500626C4F /* DesktopAIApp.swift */,
-				2747DE0B2BEDC12500626C4F /* ContentView.swift */,
-				2747DE0D2BEDC12500626C4F /* Item.swift */,
-				2CE55CF42BEEC2D3000A95C8 /* SettingsView.swift */,
-				2CE55CF62BEEC568000A95C8 /* GeneralSettingsView.swift */,
-				2CE55CF82BEEC602000A95C8 /* APIKeysSettingsView.swift */,
-				278836992BEEE1AB003FEB01 /* AIModel.swift */,
-				2CAF55402BEEEE8A00EFEB83 /* DisplayChats.swift */,
 				2747DE0F2BEDC12600626C4F /* Assets.xcassets */,
 				2747DE142BEDC12600626C4F /* DesktopAI.entitlements */,
 				2747DE112BEDC12600626C4F /* Preview Content */,
-				2702F2332BEF07D80056B4A9 /* ChatMessage.swift */,
-				2CFFBECF2BF0765A00881BDB /* SystemPromptSettingsView.swift */,
 			);
 			path = DesktopAI;
 			sourceTree = "<group>";
@@ -105,12 +98,35 @@
 		278836942BEEE09F003FEB01 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
-				278836952BEEE0B2003FEB01 /* GroqProvider.swift */,
 				278836972BEEE0C2003FEB01 /* BaseProvider.swift */,
+				278836952BEEE0B2003FEB01 /* GroqProvider.swift */,
 				274D39A12BEEF147004228FF /* OpenAIProvider.swift */,
 				274D39A32BEEF4AF004228FF /* CloudflareAIProvider.swift */,
 			);
 			path = Providers;
+			sourceTree = "<group>";
+		};
+		27CC33D12BF664D40084DEC6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2CE55CF42BEEC2D3000A95C8 /* SettingsView.swift */,
+				2CE55CF62BEEC568000A95C8 /* GeneralSettingsView.swift */,
+				2CE55CF82BEEC602000A95C8 /* APIKeysSettingsView.swift */,
+				2CFFBECF2BF0765A00881BDB /* SystemPromptSettingsView.swift */,
+				2CAF55402BEEEE8A00EFEB83 /* DisplayChatsView.swift */,
+				2747DE0B2BEDC12500626C4F /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		27CC33D22BF665730084DEC6 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2747DE0D2BEDC12500626C4F /* Item.swift */,
+				278836992BEEE1AB003FEB01 /* AIModel.swift */,
+				2702F2332BEF07D80056B4A9 /* ChatMessage.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,7 +210,7 @@
 				2CE55CF52BEEC2D3000A95C8 /* SettingsView.swift in Sources */,
 				2747DE0E2BEDC12500626C4F /* Item.swift in Sources */,
 				2747DE0A2BEDC12500626C4F /* DesktopAIApp.swift in Sources */,
-				2CAF55412BEEEE8A00EFEB83 /* DisplayChats.swift in Sources */,
+				2CAF55412BEEEE8A00EFEB83 /* DisplayChatsView.swift in Sources */,
 				2CFFBED02BF0765A00881BDB /* SystemPromptSettingsView.swift in Sources */,
 				278836982BEEE0C2003FEB01 /* BaseProvider.swift in Sources */,
 			);

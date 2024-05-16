@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-struct DisplayChats: View {
+struct DisplayChatsView: View {
     @State private var userMessage = ""
     @Binding var selectedItemId: UUID?
     @Query private var items: [Item]
